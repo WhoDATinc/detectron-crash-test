@@ -5,7 +5,7 @@ const path = require("path");
 const app = express();
 const port = 3000;
 
-const serviceAccount = require("./Danceplanet-76cd4b44f069.json");
+// const serviceAccount = require("./Danceplanet-76cd4b44f069.json");
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
