@@ -1,12 +1,35 @@
 const express = require("express");
 const admin = require("firebase-admin");
 const chokidar = require("chokidar");
+const bearerToken = require("express-bearer-token");
 const path = require("path");
 const app = express();
-const port = 3000;
+const port = 8080;
 
 // const serviceAccount = require("./Danceplanet-76cd4b44f069.json");
+app.use(bearerToken());
+app.use("/public/files", function(req, res, next) {
+  admin
+    .auth()
+    .verifyIdToken(req.token)
+    .then(function(decodedToken) {
+      // var uid = decodedToken.uid;
+      next();
+      // ...
+    })
+    .catch(function(error) {
+      // Handle error
+      console.error(error);
+    });
+  // if (req.user) {
+  //   next();
+  // } else {
+  //   res.render(403, "login", { message: "Please, login!" });
+  // }
+});
+app.use(express.static("public/files"));
 
+// TODO: remove this
 app.get("/", (req, res) => res.send("Hello World!"));
 
 app.listen(port, () => {
@@ -15,14 +38,12 @@ app.listen(port, () => {
 });
 
 const setupFirebase = () => {
-  const admin = require("firebase-admin");
   admin.initializeApp();
-
   var db = admin.firestore();
   // const settings = { timestampsInSnapshots: true };
   // db.settings(settings);
 
-  const watcher = chokidar.watch("./files/output/files", {
+  const watcher = chokidar.watch("./public/files/output/files", {
     ignored: /(^|[\/\\])\../,
     persistent: true
   });
