@@ -1,6 +1,6 @@
-# Dockerfile extending a generic NodeJS/NVidia (CUDA9,CUDNN7) image and a generic Python/Miniconda3 image with application files for a
+# Dockerfile extending a generic NodeJS/NVidia (CUDA9,CUDNN7,devel) image and a generic Python/Miniconda3 image with application files for a
 # single application.
-FROM docker.io/zakdances/docker-images:latest
+FROM docker.io/zakdances/nodejs-gpu-miniconda3:latest
 
 # You can use this build-arg have docker bypass the command which
 # causes the crash (`make ops`). The image will be kept alive with a
