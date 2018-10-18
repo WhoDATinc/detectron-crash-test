@@ -97,7 +97,6 @@ RUN mkdir -p server
 WORKDIR /app/server
 COPY . .
 
-RUN mkdir -p public/files/output/files
 RUN npm i
 
 WORKDIR /app
